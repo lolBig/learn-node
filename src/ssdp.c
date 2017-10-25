@@ -51,8 +51,11 @@ void server_send_heartbeat(uv_udp_t *handle, const struct sockaddr* addr) {
     uv_udp_send(req, handle, buf, 1, addr, on_server_sent_heartbeat);
 }
 
-void on_server_recv_multicast(uv_udp_t* handle, ssize_t nread,
-                              const uv_buf_t* buf, const struct sockaddr* addr, unsigned flags) {
+void on_server_recv_multicast(uv_udp_t* handle,
+                              ssize_t nread,
+                              const uv_buf_t* buf,
+                              const struct sockaddr* addr,
+                              unsigned flags) {
     if (nread < 0) {
         RERROR_CODE(nread);
         uv_close((uv_handle_t*)handle, NULL);
@@ -69,8 +72,11 @@ void on_server_recv_multicast(uv_udp_t* handle, ssize_t nread,
     }
 }
 
-void on_rokid_recv_heartbeat(uv_udp_t* handle, ssize_t nread,
-                             const uv_buf_t* buf, const struct sockaddr* addr, unsigned flags) {
+void on_rokid_recv_heartbeat(uv_udp_t* handle,
+                             ssize_t nread,
+                             const uv_buf_t* buf,
+                             const struct sockaddr* addr,
+                             unsigned flags) {
     if (nread < 0) {
         RERROR_CODE(nread);
         uv_close((uv_handle_t*)handle, NULL);
@@ -131,39 +137,8 @@ void server_listen() {
     uv_udp_set_membership(server_socket, SSDP_ADDR, NULL, UV_JOIN_GROUP);
 }
 
-void hare(void *arg) {
-    int tracklen = *((int *) arg);
-    while (tracklen) {
-        tracklen--;
-        sleep(1);
-        fprintf(stderr, "Hare ran another step\n");
-    }
-    fprintf(stderr, "Hare done running!\n");
-}
-
-void tortoise(void *arg) {
-    int tracklen = *((int *) arg);
-    while (tracklen) {
-        tracklen--;
-        fprintf(stderr, "Tortoise ran another step\n");
-        sleep(3);
-    }
-    fprintf(stderr, "Tortoise done running!\n");
-
-}
-
 int main(int argc, char **argv) {
 //  server_listen();
-//  rokid_search();
-//  return uv_run(uv_default_loop(), UV_RUN_DEFAULT);
-    int tracklen = 10;
-    uv_thread_t hare_id;
-    uv_thread_t tortoise_id;
-    uv_thread_create(&hare_id, hare, &tracklen);
-    uv_thread_create(&tortoise_id, tortoise, &tracklen);
-
-    uv_thread_join(&hare_id);
-    uv_thread_join(&tortoise_id);
-
-    return 0;
+  rokid_search();
+  return uv_run(uv_default_loop(), UV_RUN_DEFAULT);
 }
