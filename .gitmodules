@@ -1,0 +1,3 @@
+[submodule "libuv-cmake"]
+	path = libuv-cmake
+	url = https://github.com/jen20/libuv-cmake.git
