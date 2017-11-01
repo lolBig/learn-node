@@ -3,7 +3,7 @@
 #define PRODUCT_MAX_COUNT 10
 #define PRODUCE_MAX_TIMES 15
 #define CONSUMER_COUNT 5
-#define PRODUCER_COUNT 1
+#define PRODUCER_COUNT 3
 
 int isEnd = FALSE;
 int product_count = 0;
@@ -17,7 +17,7 @@ typedef void* (*thread_routine)(void *pvoid);
 void* consume(void *pvoid) {
   int pid = (int)pvoid;
   while (TRUE) {
-//    sleep((unsigned int)(random() % 3));
+    sleep((unsigned int)(random() % 3));
     RLOG("%d consume locking\n", pid);
     pthread_mutex_lock(&produce_mutex);
     if (isEnd && product_count < 1) {
@@ -44,22 +44,25 @@ void* consume(void *pvoid) {
 void* produce(void *pvoid) {
   int pid = (int)pvoid;
   while (!isEnd) {
-//    sleep((unsigned int)(random() % 3));
+    sleep((unsigned int)(random() % 3));
     pthread_mutex_lock(&produce_mutex);
     if (product_count >= PRODUCT_MAX_COUNT) {
       RLOG("%d waiting for consume\n", pid);
       pthread_cond_wait(&produce_cond, &produce_mutex);
       RLOG("%d continue produce\n", pid);
     }
-    ++product_count;
-    pthread_cond_broadcast(&consume_cond);
-    ++produce_times;
-    RLOG("%d produce product left %d total %d\n",
-         pid, product_count, produce_times);
     if (produce_times >= PRODUCE_MAX_TIMES) {
       RLOG("%d produce finisehd left %d\n", pid, product_count);
       isEnd = TRUE;
+    } else {
+      if (product_count < PRODUCT_MAX_COUNT) {
+        ++product_count;
+        ++produce_times;
+      }
+      RLOG("%d produce product left %d total %d\n",
+           pid, product_count, produce_times);
     }
+    pthread_cond_broadcast(&consume_cond);
     pthread_mutex_unlock(&produce_mutex);
   }
   pthread_exit(NULL);
