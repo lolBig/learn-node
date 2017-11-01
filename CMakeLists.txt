@@ -21,5 +21,5 @@ target_link_libraries(wget uv ex ssl crypto)
 add_executable(websocket src/websocket.c)
 target_link_libraries(websocket uv)
 
-add_executable(multiTask src/simple-producer-consumer.c)
-target_link_libraries(multiTask)
+add_executable(simple-producer-consumer src/simple-producer-consumer.c)
+target_link_libraries(simple-producer-consumer)
