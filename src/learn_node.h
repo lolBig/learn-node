@@ -6,6 +6,8 @@
 #include <string.h>
 #include <assert.h>
 #include <unistd.h>
+#include <limits.h>
+#include <uv.h>
 
 #define RLOG(format, ...) fprintf(stdout, format, ##__VA_ARGS__)
 #define RERROR(format, ...) fprintf(stderr, format, ##__VA_ARGS__)

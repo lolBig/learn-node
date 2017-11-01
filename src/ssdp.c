@@ -1,4 +1,3 @@
-#include <uv.h>
 #include "learn_node.h"
 
 #define SSDP_PORT 1900
