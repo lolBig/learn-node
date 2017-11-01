@@ -78,14 +78,14 @@ int main (int argc, char *argv[]) {
   pthread_attr_init(&attr);
   pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
 
-  int totalThreads = CONSUMER_COUNT + PRODUCER_COUNT;
-  pthread_t threads[totalThreads];
-  for (int i = 0; i < totalThreads; ++i) {
+  int total_thread = CONSUMER_COUNT + PRODUCER_COUNT;
+  pthread_t threads[total_thread];
+  for (int i = 0; i < total_thread; ++i) {
     thread_routine routine = i >= CONSUMER_COUNT ? produce : consume;
     pthread_create(&threads[i], &attr, routine, (void*)i);
   }
 
-  for (int i = 0; i < totalThreads; ++i) {
+  for (int i = 0; i < total_thread; ++i) {
     pthread_join(threads[i], NULL);
   }
 
