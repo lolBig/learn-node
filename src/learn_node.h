@@ -19,6 +19,7 @@
 } while(0)
 #define RMALLOC(type) (type*)malloc(sizeof(type))
 #define RMALLOC_ARR(type, size) (type*)malloc(sizeof(type) * size)
+#define RFREE(p) free(p)
 typedef unsigned int uint;
 
 #endif //LEANUV_LEANUV_H

@@ -17,7 +17,7 @@ typedef void* (*thread_routine)(void *pvoid);
 void* consume(void *pvoid) {
   int pid = (int)pvoid;
   while (TRUE) {
-    sleep((unsigned int)(random() % 3));
+    sleep((uint)(random() % 2));
     RLOG("%d consume locking\n", pid);
     pthread_mutex_lock(&produce_mutex);
     if (isEnd && product_count < 1) {
@@ -44,7 +44,7 @@ void* consume(void *pvoid) {
 void* produce(void *pvoid) {
   int pid = (int)pvoid;
   while (!isEnd) {
-    sleep((unsigned int)(random() % 3));
+    sleep((unsigned int)(random() % 2));
     pthread_mutex_lock(&produce_mutex);
     if (product_count >= PRODUCT_MAX_COUNT) {
       RLOG("%d waiting for consume\n", pid);

@@ -18,8 +18,11 @@ target_link_libraries(ssdp uv)
 add_executable(wget src/wget.c)
 target_link_libraries(wget uv ex ssl crypto)
 
-add_executable(websocket src/websocket.c)
-target_link_libraries(websocket uv)
+# add_executable(websocket src/websocket.c)
+# target_link_libraries(websocket uv)
 
-add_executable(simple-producer-consumer src/simple-producer-consumer.c)
+add_executable(simple-producer-consumer src/multi-producer-consumer.c)
 target_link_libraries(simple-producer-consumer)
+
+add_executable(parallel-echo src/parallel-echo.c)
+target_link_libraries(parallel-echo uv)
