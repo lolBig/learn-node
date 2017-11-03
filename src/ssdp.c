@@ -137,7 +137,9 @@ void server_listen() {
 }
 
 int main(int argc, char **argv) {
-//  server_listen();
+  /* if server cannot receive multicast from rokid,
+    it means your router not open or not support upnp */
+  server_listen();
   rokid_search();
   return uv_run(uv_default_loop(), UV_RUN_DEFAULT);
 }
