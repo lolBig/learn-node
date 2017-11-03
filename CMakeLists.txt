@@ -16,7 +16,7 @@ add_executable(ssdp src/ssdp.c)
 target_link_libraries(ssdp uv)
 
 add_executable(wget src/wget.c)
-target_link_libraries(wget uv ex ssl crypto)
+target_link_libraries(wget uv learnlib ssl crypto)
 
 # add_executable(websocket src/websocket.c)
 # target_link_libraries(websocket uv)
@@ -24,5 +24,5 @@ target_link_libraries(wget uv ex ssl crypto)
 add_executable(simple-producer-consumer src/multi-producer-consumer.c)
 target_link_libraries(simple-producer-consumer)
 
-add_executable(parallel-echo src/parallel-echo.c)
-target_link_libraries(parallel-echo uv)
+add_executable(parallel-sequential-echo src/parallel-sequential-echo.c)
+target_link_libraries(parallel-sequential-echo)
